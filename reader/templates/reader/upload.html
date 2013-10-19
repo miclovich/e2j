@@ -1,0 +1,17 @@
+{% load url from future %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">{# keep this right after <head> #}
+        <title>I just want a simple API</title>
+    </head>
+    <body>
+      <form action='.' method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Upload</button>
+      </form>
+    </body>
+</html>
