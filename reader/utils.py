@@ -31,6 +31,7 @@ def convert_book_to_json(workbook):
 
     # read the book's content
     worksheets = workbook.sheet_names()
+    dict_return = {}  # dataset collection per column
     for sheet_name in worksheets:
         worksheet = workbook.sheet_by_name(sheet_name)
 
@@ -38,13 +39,18 @@ def convert_book_to_json(workbook):
         num_rows = worksheet.nrows - 1
         curr_row = -1
         all_rows = []
-        dict_return = {}  # dataset collection per column
-        dict_collection = []
-        num_cells = worksheet.ncols - 1
+        # num_cells = worksheet.ncols - 1
+
         while curr_row < num_rows:
             curr_row += 1
             row = worksheet.row(curr_row)
             all_rows.append(row)
 
         heading_rows = all_rows.pop(0)
-        print all_rows
+        heading_rows = [item.value for item in heading_rows]
+        for heading in heading_rows:
+            data = []
+            for row in all_rows:
+                data.append(row.pop(0).value)  # pop out the rows!!! :-)
+            dict_return[heading] = data
+    return json.dumps(dict_return)
