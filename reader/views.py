@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseServerError
-from django.shortcuts import render_to_response, RequestContext
 from django.views.generic import View
 from django.views.decorators.csrf import csrf_exempt
+import json
 from .forms import UploadFileForm
 from .utils import convert_book_to_json
 
@@ -23,4 +23,8 @@ def upload_file(request):
             json_response = convert_book_to_json(book)
             return HttpResponse(json_response, mimetype='application/json')
         else:
-            return HttpResponseServerError("Invalid API call.")
+            return HttpResponse(
+                json.dumps({"error": "Invalid API call."}),
+                mimetype='application/json')
+    else:
+        return HttpResponseServerError("Only POSTS")
