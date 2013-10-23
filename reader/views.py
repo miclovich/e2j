@@ -20,8 +20,15 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             book = form.convert_excel()
-            json_response = convert_book_to_json(book)
-            return HttpResponse(json_response, mimetype='application/json')
+            chart_type = form.get_charttype()
+            if chart_type:
+                print chart_type
+                json_response = convert_book_to_json(book, chart_type=chart_type)
+                return HttpResponse(json_response, mimetype='application/json')
+            else:
+                return HttpResponse(
+                    json.dumps({"error": "Indefined chart type"}),
+                    mimetype='application/json')
         else:
             return HttpResponse(
                 json.dumps({"error": "Invalid API call."}),
