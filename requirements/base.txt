@@ -2,3 +2,4 @@
 Django==1.5.4
 xlrd==0.8.0
 xlwt==0.7.2
+South
