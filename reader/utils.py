@@ -18,7 +18,7 @@ def handle_uploaded_excel(request_FILE):
     # return some JSON output
 
 
-def convert_book_to_json(workbook):
+def convert_book_to_json(workbook, chart_type=None):
     """
     It has been assumed that the format of the work is as follows;
     The first row is always a collection of words or terms defining the heading
@@ -41,6 +41,7 @@ def convert_book_to_json(workbook):
         all_rows = []
         # num_cells = worksheet.ncols - 1
 
+        # TODO => use chart type to define how we label our JSON output
         while curr_row < num_rows:
             curr_row += 1
             row = worksheet.row(curr_row)
