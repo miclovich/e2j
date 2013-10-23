@@ -22,7 +22,6 @@ def upload_file(request):
             book = form.convert_excel()
             chart_type = form.get_charttype()
             if chart_type:
-                print chart_type
                 json_response = convert_book_to_json(book, chart_type=chart_type)
                 return HttpResponse(json_response, mimetype='application/json')
             else:
