@@ -1,0 +1,4 @@
+-e git://github.com/jmcantrell/python-dateutils@0c35bda12a31e0f7b1b2348ab0b602de72ae953a#egg=DateUtils-dev
+Django==1.5.4
+xlrd==0.8.0
+xlwt==0.7.2
