@@ -1,3 +1,5 @@
+# don't commit src/ build files
+src/
 *.pyc
 .DS_Store
 # Compiled source #
