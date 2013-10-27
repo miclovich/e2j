@@ -31,7 +31,8 @@ def convert_book_to_json(workbook, chart_type=None):
 
     # read the book's content
     worksheets = workbook.sheet_names()
-    dict_return = {}  # dataset collection per column
+    dict_return = {}  # dataset collection per row
+    dict_return['data'] = []
     for sheet_name in worksheets:
         worksheet = workbook.sheet_by_name(sheet_name)
 
@@ -51,7 +52,9 @@ def convert_book_to_json(workbook, chart_type=None):
         heading_rows = [item.value for item in heading_rows][1:]  # the first cell is empty
         dict_return['headings'] = heading_rows
         for single_row in all_rows:
+            temp = {}
             _key_item = single_row.pop(0)
-            dict_return[_key_item.value] = [i.value for i in single_row]
+            temp[_key_item.value] = [i.value for i in single_row]
+            dict_return['data'].append(temp)
 
     return json.dumps(dict_return)
