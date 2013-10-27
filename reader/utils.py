@@ -48,10 +48,10 @@ def convert_book_to_json(workbook, chart_type=None):
             all_rows.append(row)
 
         heading_rows = all_rows.pop(0)
-        heading_rows = [item.value for item in heading_rows]
-        for heading in heading_rows:
-            data = []
-            for row in all_rows:
-                data.append(row.pop(0).value)  # pop out the rows!!! :-)
-            dict_return[heading] = data
+        heading_rows = [item.value for item in heading_rows][1:]  # the first cell is empty
+        dict_return['headings'] = heading_rows
+        for single_row in all_rows:
+            _key_item = single_row.pop(0)
+            dict_return[_key_item.value] = [i.value for i in single_row]
+
     return json.dumps(dict_return)
