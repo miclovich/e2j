@@ -6,7 +6,7 @@ from .forms import UploadFileForm
 from .utils import convert_book_to_json
 
 
-class ReadJson(View):
+class HomePageView(View):
 
     def get(self, request, *args, **kwargs):
         return HttpResponse("This is just an API.")
