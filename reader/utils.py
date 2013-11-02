@@ -48,12 +48,13 @@ def convert_book_to_json(workbook, chart_type=None):
             row = worksheet.row(curr_row)
             all_rows.append(row)
 
-        heading_rows = all_rows.pop(0)
-        heading_rows = [item.value for item in heading_rows][1:]  # the first cell is empty
-        dict_return['headings'] = heading_rows
         if chart_type == 'spline' or chart_type == 'basic_bar' or chart_type ==\
            'basic_column' or chart_type == 'stacked_bar' or \
            chart_type == 'stacked_column':
+
+            heading_rows = all_rows.pop(0)
+            heading_rows = [item.value for item in heading_rows][1:]  # the first cell is empty
+            dict_return['headings'] = heading_rows
 
             for single_row in all_rows:
                 temp = {}
@@ -61,6 +62,12 @@ def convert_book_to_json(workbook, chart_type=None):
                 temp['name'] = _key_item.value
                 temp['data'] = [i.value for i in single_row]
                 dict_return['data_values'].append(temp)
+        elif chart_type == 'basic_pie':
+            heading_rows = all_rows.pop(0)
+            heading_rows = [item.value for item in heading_rows]
+            remaining_row = [item.value for item in all_rows[0]]
+            temp = zip(heading_rows, remaining_row)
+            dict_return['data_values'] = [list(_item) for _item in temp]
         else:
             pass
 
