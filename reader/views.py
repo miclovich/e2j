@@ -26,7 +26,7 @@ def upload_file(request):
                 return HttpResponse(json_response, mimetype='application/json')
             else:
                 return HttpResponse(
-                    json.dumps({"error": "Indefined chart type"}),
+                    json.dumps({"error": "Undefined chart type"}),
                     mimetype='application/json')
         else:
             return HttpResponse(
