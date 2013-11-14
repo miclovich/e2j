@@ -158,3 +158,13 @@ LOGGING = {
         },
     }
 }
+try:
+    import sys, os
+    if os.environ.has_key('LOCAL_SETTINGS'):
+        # the LOCAL_SETTINGS environment variable is used by the build server
+        sys.path.insert(0, os.path.dirname(os.environ['LOCAL_SETTINGS']))
+        from settings_test import *
+    else:
+        from localsettings import *
+except ImportError:
+    pass
