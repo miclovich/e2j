@@ -33,8 +33,9 @@ def convert_book_to_json(workbook, chart_type=None):
     worksheets = workbook.sheet_names()
     dict_return = {}  # dataset collection per row
     dict_return['data_values'] = []
-    for sheet_name in worksheets:
-        worksheet = workbook.sheet_by_name(sheet_name)
+    # default is 1 worksheet
+    try:
+        worksheet = workbook.sheet_by_name(worksheets[0])
 
         # extract data from this worksheet
         num_rows = worksheet.nrows - 1
@@ -46,7 +47,13 @@ def convert_book_to_json(workbook, chart_type=None):
         while curr_row < num_rows:
             curr_row += 1
             row = worksheet.row(curr_row)
-            all_rows.append(row)
+            row_set = set([val.value == '' for val in row])
+            if True in row_set and len(row_set) == 1:
+                # if a single row has all empty values; this is considered an
+                # illegal entry
+                pass
+            else:
+                all_rows.append(row)
 
         if chart_type == 'spline' or chart_type == 'basic_bar' or chart_type ==\
            'basic_column' or chart_type == 'stacked_bar' or \
@@ -70,5 +77,8 @@ def convert_book_to_json(workbook, chart_type=None):
             dict_return['data_values'] = [list(_item) for _item in temp]
         else:
             pass
+    except IndexError:
+        # Return convenient error
+        pass
 
     return json.dumps(dict_return)
