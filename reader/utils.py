@@ -55,9 +55,7 @@ def convert_book_to_json(workbook, chart_type=None):
             else:
                 all_rows.append(row)
 
-        if chart_type == 'spline' or chart_type == 'basic_bar' or chart_type ==\
-           'basic_column' or chart_type == 'stacked_bar' or \
-           chart_type == 'stacked_column':
+        if chart_type in ['spline', 'column', 'bar', 'basic_bar', 'basic_column', 'stacked_bar', 'stacked_column']:
 
             heading_rows = all_rows.pop(0)
             heading_rows = [item.value for item in heading_rows][1:]  # the first cell is empty
